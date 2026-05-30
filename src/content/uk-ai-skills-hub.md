@@ -2,6 +2,7 @@
 title: "The UK paid £4.1 million for a bookmarks site"
 date: "2023-10-27"
 description: "The UK Government recently unveiled its 'AI Skills Hub', which wants to provide 10 million workers with AI skills by 2030."
+tags: ["industry", "opinion"]
 ---
 
 The UK Government recently unveiled its 'AI Skills Hub', which wants to provide 10 million workers with AI skills by 2030. The main site was delivered by PwC for the low, low price of.. **£4.1 million (~$5,657,000)**.

@@ -5,17 +5,21 @@ const Footer = () => {
         <footer style={{
             marginTop: 'var(--spacing-xl)',
             padding: 'var(--spacing-lg) 0',
-            borderTop: '1px solid #222',
-            textAlign: 'center',
+            borderTop: '1px solid var(--border)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 'var(--spacing-sm)',
             color: 'var(--text-secondary)',
-            fontSize: '0.9rem'
+            fontSize: '0.875rem'
         }}>
-            <div style={{ marginBottom: 'var(--spacing-sm)' }}>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={{ marginRight: 'var (--spacing-md)' }}>GitHub</a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ marginRight: 'var(--spacing-md)' }}>Twitter</a>
-                <a href="mailto:email@example.com">Email</a>
+            <p style={{ margin: 0 }}>&copy; {new Date().getFullYear()} Chandan Joshi</p>
+            <div style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
+                <a href="https://www.linkedin.com/in/chandan015/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/cjoshidev" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:chandanjoshi.dev@gmail.com">Email</a>
             </div>
-            <p>&copy; {new Date().getFullYear()} Chandan Joshi. All rights reserved.</p>
         </footer>
     );
 };

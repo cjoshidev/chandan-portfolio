@@ -1,11 +1,11 @@
 /* Design System: Minimal & Clean */
 :root {
-  /* Colors */
   --bg-primary: #111111;
-  --bg-card: #161616; /* Slightly lighter for cards */
+  --bg-card: #161616;
   --text-primary: #EDEDED;
-  --text-secondary: #A1A1A1;
-  --accent: #00E0A6; /* Teal/Green pop */
+  --text-secondary: #888888;
+  --accent: #00E0A6;
+  --border: #222222;
 }
 
 [data-theme='light'] {
@@ -13,7 +13,8 @@
   --bg-card: #F8F8F8;
   --text-primary: #111111;
   --text-secondary: #666666;
-  --accent: #00A67E; /* Slightly darker teal for good contrast */
+  --accent: #00A67E;
+  --border: #E5E5E5;
 }
 
 /* Spacing */
@@ -85,3 +86,85 @@ img {
    max-width: 600px;
    margin-bottom: var(--spacing-md);
 }
+
+.blog-card {
+  display: block;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.blog-card:last-child {
+  border-bottom: none;
+}
+
+.blog-card:hover {
+  opacity: 0.75;
+}
+
+/* Remove default list padding for nav */
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Code blocks */
+.markdown-content pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin: 20px 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.markdown-content code {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+}
+
+.markdown-content :not(pre) > code {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 6px;
+  color: var(--accent);
+}
+
+/* highlight.js theme overrides — minimal, fits both dark/light */
+.hljs {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in { color: #7ec8e3; }
+
+.hljs-string,
+.hljs-attr { color: #98d4a3; }
+
+.hljs-comment { color: var(--text-secondary); font-style: italic; }
+
+.hljs-number,
+.hljs-literal { color: #f0a05a; }
+
+.hljs-title,
+.hljs-class .hljs-title { color: var(--accent); }
+
+[data-theme='light'] .hljs-keyword,
+[data-theme='light'] .hljs-selector-tag,
+[data-theme='light'] .hljs-built_in { color: #0550ae; }
+
+[data-theme='light'] .hljs-string,
+[data-theme='light'] .hljs-attr { color: #116329; }
+
+[data-theme='light'] .hljs-number,
+[data-theme='light'] .hljs-literal { color: #953800; }
+
+[data-theme='light'] .hljs-title { color: var(--accent); }
