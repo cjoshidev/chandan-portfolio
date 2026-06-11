@@ -4,10 +4,36 @@ import fm from 'front-matter';
 
 const readTime = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 200));
 
+const TYPE_LABELS = {
+    postmortem: 'postmortem',
+    note: 'note',
+    opinion: 'opinion',
+    rfc: 'rfc',
+    til: 'til'
+};
+
+const TypeBadge = ({ type }) => {
+    if (!type) return null;
+    return (
+        <span style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.68rem',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            color: 'var(--accent)',
+            border: '1px solid var(--border)',
+            borderRadius: '4px',
+            padding: '2px 7px'
+        }}>
+            {TYPE_LABELS[type] || type}
+        </span>
+    );
+};
+
 const Blog = () => {
     const [activeTag, setActiveTag] = useState(null);
 
-    const modules = import.meta.glob('../content/*.md', { as: 'raw', eager: true });
+    const modules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default', eager: true });
 
     const posts = Object.entries(modules).map(([path, content]) => {
         const { attributes, body } = fm(content);
@@ -22,10 +48,15 @@ const Blog = () => {
         : posts;
 
     return (
-        <div style={{ paddingTop: 'var(--spacing-xl)', maxWidth: '600px' }}>
-            <h1 style={{ marginBottom: allTags.length ? 'var(--spacing-md)' : 'var(--spacing-lg)', fontSize: '1.8rem', letterSpacing: '-0.02em' }}>
-                Writing
-            </h1>
+        <div style={{ paddingTop: 'var(--spacing-xl)', maxWidth: '640px' }}>
+            <header style={{ marginBottom: 'var(--spacing-lg)' }}>
+                <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', letterSpacing: '-0.03em', marginBottom: 'var(--spacing-sm)' }}>
+                    Logs
+                </h1>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, maxWidth: '520px' }}>
+                    Postmortems, engineering notes, and the occasional opinion — what I learned building and running things.
+                </p>
+            </header>
 
             {allTags.length > 0 && (
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: 'var(--spacing-lg)' }}>
@@ -33,15 +64,16 @@ const Blog = () => {
                         onClick={() => setActiveTag(null)}
                         style={{
                             background: 'none',
+                            fontFamily: 'var(--font-mono)',
                             border: `1px solid ${activeTag === null ? 'var(--text-primary)' : 'var(--border)'}`,
                             color: activeTag === null ? 'var(--text-primary)' : 'var(--text-secondary)',
                             padding: '4px 12px',
                             borderRadius: '4px',
-                            fontSize: '0.8rem',
+                            fontSize: '0.78rem',
                             cursor: 'pointer'
                         }}
                     >
-                        All
+                        all
                     </button>
                     {allTags.map(tag => (
                         <button
@@ -49,11 +81,12 @@ const Blog = () => {
                             onClick={() => setActiveTag(tag === activeTag ? null : tag)}
                             style={{
                                 background: 'none',
+                                fontFamily: 'var(--font-mono)',
                                 border: `1px solid ${activeTag === tag ? 'var(--text-primary)' : 'var(--border)'}`,
                                 color: activeTag === tag ? 'var(--text-primary)' : 'var(--text-secondary)',
                                 padding: '4px 12px',
                                 borderRadius: '4px',
-                                fontSize: '0.8rem',
+                                fontSize: '0.78rem',
                                 cursor: 'pointer'
                             }}
                         >
@@ -66,16 +99,14 @@ const Blog = () => {
             <div>
                 {visible.map(post => (
                     <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card">
-                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '6px', display: 'flex', gap: '12px' }}>
-                            <span>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <TypeBadge type={post.type} />
+                            <span style={{ fontFamily: 'var(--font-mono)' }}>
                                 {new Date(post.date).toLocaleDateString('en-GB', {
                                     year: 'numeric', month: 'short', day: 'numeric'
                                 })}
                             </span>
-                            <span>{readTime(post.body)} min read</span>
-                            {(post.tags || []).map(tag => (
-                                <span key={tag} style={{ color: 'var(--accent)' }}>{tag}</span>
-                            ))}
+                            <span style={{ fontFamily: 'var(--font-mono)' }}>{readTime(post.body)} min read</span>
                         </div>
                         <h2 style={{ fontSize: '1.1rem', marginBottom: '6px', lineHeight: 1.4, color: 'var(--text-primary)', fontWeight: 600 }}>
                             {post.title}

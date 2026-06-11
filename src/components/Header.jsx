@@ -29,12 +29,13 @@ const Header = () => {
                     <ul style={{ display: 'flex', gap: 'var(--spacing-md)', listStyle: 'none', margin: 0, padding: 0, fontSize: '0.9rem' }}>
                         {isHome ? (
                             <>
-                                <li><a href="#work" style={{ color: 'var(--text-secondary)' }}>Work</a></li>
-                                <li><a href="#skills" style={{ color: 'var(--text-secondary)' }}>Skills</a></li>
+                                <li><a href="#projects" style={{ color: 'var(--text-secondary)' }}>Work</a></li>
+                                <li><a href="#systems" style={{ color: 'var(--text-secondary)' }}>Systems</a></li>
+                                <li><a href="#work" style={{ color: 'var(--text-secondary)' }}>Experience</a></li>
                                 <li><a href="#contact" style={{ color: 'var(--text-secondary)' }}>Contact</a></li>
                             </>
                         ) : null}
-                        <li><Link to="/blog" style={{ color: 'var(--text-secondary)' }}>Blog</Link></li>
+                        <li><Link to="/blog" style={{ color: 'var(--text-secondary)' }}>Logs</Link></li>
                     </ul>
                 </nav>
                 <ThemeToggle />
