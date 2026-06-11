@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
@@ -6,36 +6,30 @@ import fm from 'front-matter';
 
 const readTime = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 200));
 
+const modules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default', eager: true });
+
 const BlogPost = () => {
     const { slug } = useParams();
-    const [content, setContent] = useState('');
-    const [meta, setMeta] = useState({});
-    const [mins, setMins] = useState(null);
-    const [error, setError] = useState(false);
+    const postData = modules[`../content/${slug}.md`];
+
+    const { meta, content, mins } = useMemo(() => {
+        if (!postData) return { meta: null, content: '', mins: null };
+        const { attributes, body } = fm(postData);
+        return { meta: attributes, content: body, mins: readTime(body) };
+    }, [postData]);
 
     useEffect(() => {
-        const modules = import.meta.glob('../content/*.md', { as: 'raw', eager: true });
-        const postData = modules[`../content/${slug}.md`];
-
-        if (!postData) {
-            setError(true);
-            return;
+        if (meta?.title) {
+            document.title = `${meta.title} — Chandan Joshi`;
+            return () => { document.title = 'Chandan Joshi'; };
         }
+    }, [meta]);
 
-        const { attributes, body } = fm(postData);
-        setMeta(attributes);
-        setContent(body);
-        setMins(readTime(body));
-        document.title = `${attributes.title} — Chandan Joshi`;
-
-        return () => { document.title = 'Chandan Joshi'; };
-    }, [slug]);
-
-    if (error) {
+    if (!postData) {
         return (
             <div style={{ padding: 'var(--spacing-xl) 0', textAlign: 'center' }}>
                 <h2>Post not found</h2>
-                <Link to="/blog" style={{ color: 'var(--accent)' }}>Back to writing</Link>
+                <Link to="/blog" style={{ color: 'var(--accent)' }}>Back to logs</Link>
             </div>
         );
     }
@@ -45,19 +39,35 @@ const BlogPost = () => {
     return (
         <article style={{ padding: 'var(--spacing-xl) 0', maxWidth: '680px' }}>
             <header style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <Link to="/blog" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
-                    &larr; Writing
+                <Link to="/blog" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', fontFamily: 'var(--font-mono)' }}>
+                    &larr; logs
                 </Link>
+                {meta.type && (
+                    <div style={{ marginTop: 'var(--spacing-md)' }}>
+                        <span style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.68rem',
+                            letterSpacing: '0.04em',
+                            textTransform: 'uppercase',
+                            color: 'var(--accent)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '4px',
+                            padding: '2px 7px'
+                        }}>
+                            {meta.type}
+                        </span>
+                    </div>
+                )}
                 <h1 style={{
                     fontSize: 'clamp(1.6rem, 4vw, 2.2rem)',
-                    marginTop: 'var(--spacing-md)',
+                    marginTop: 'var(--spacing-sm)',
                     marginBottom: 'var(--spacing-sm)',
                     lineHeight: 1.25,
                     letterSpacing: '-0.02em'
                 }}>
                     {meta.title}
                 </h1>
-                <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', gap: '12px', flexWrap: 'wrap', fontFamily: 'var(--font-mono)' }}>
                     <span>
                         {new Date(meta.date).toLocaleDateString('en-GB', {
                             year: 'numeric', month: 'long', day: 'numeric'

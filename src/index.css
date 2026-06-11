@@ -28,7 +28,8 @@
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, 'Consolas', monospace;
+
   /* Layout */
   --max-width: 800px;
   --header-height: 70px;
@@ -168,3 +169,140 @@ nav ul {
 [data-theme='light'] .hljs-literal { color: #953800; }
 
 [data-theme='light'] .hljs-title { color: var(--accent); }
+
+/* ============================================================
+   Status-page redesign
+   ============================================================ */
+
+.mono { font-family: var(--font-mono); }
+
+/* Subtle reveal on load — disabled for reduced motion */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  animation: fadeUp 0.5s ease both;
+}
+
+/* Project / system cards */
+.project-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+/* ---- Command palette ---- */
+.cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 14vh;
+  z-index: 1000;
+  animation: cmdkFade 0.12s ease;
+}
+
+[data-theme='light'] .cmdk-overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes cmdkFade { from { opacity: 0; } to { opacity: 1; } }
+
+.cmdk-panel {
+  width: min(560px, 92vw);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  animation: cmdkPop 0.14s ease;
+}
+
+@keyframes cmdkPop { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.cmdk-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cmdk-input-row input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+}
+
+.cmdk-input-row input::placeholder { color: var(--text-secondary); }
+
+.cmdk-kbd, kbd.cmdk-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.cmdk-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.cmdk-item.is-active { background: var(--bg-primary); }
+
+.cmdk-item-icon { display: flex; color: var(--text-secondary); }
+.cmdk-item.is-active .cmdk-item-icon { color: var(--accent); }
+.cmdk-item-label { flex: 1; }
+.cmdk-item-group {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: lowercase;
+}
+
+.cmdk-empty {
+  padding: 18px 12px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Focus visibility */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .project-card:hover { transform: none; }
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import ProjectCard from '../components/ProjectCard';
+import Systems from '../components/Systems';
 
 const SectionDivider = () => (
     <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: 'var(--spacing-xl) 0 0' }} />
@@ -37,7 +39,13 @@ const experience = [
         role: 'Full Stack Engineer',
         period: 'Jul 2024 – Present',
         location: 'Pune, India',
-        highlights: [],
+        // TODO (Chandan): replace these placeholders with your real ClearRoute wins.
+        // Keep them metric-driven, like the Zeals bullets below (what you built + the measurable impact).
+        highlights: [
+            '[PLACEHOLDER] Led [feature/system] on [client/product], delivering [measurable outcome — %, time saved, scale].',
+            '[PLACEHOLDER] Built [what] with [tech], improving [metric] by [number].',
+            '[PLACEHOLDER] Owned [responsibility] across [area], reducing [cost/effort] by [number].'
+        ],
         tags: ['TypeScript', 'Node.js', 'AWS', 'Terraform', 'CI/CD', 'Datadog']
     },
     {
@@ -67,26 +75,42 @@ const experience = [
     }
 ];
 
-const skillGroups = [
+// Projects pulled from github.com/cjoshidev (public repos).
+// NOTE (Chandan): none of these repos had real READMEs, so the descriptions below are
+// honest placeholders based on the repo name + stack. Replace each `description` with a
+// real one-liner (the problem it solves + the outcome), and add a `live` URL where deployed.
+const projects = [
     {
-        label: 'Frontend',
-        skills: ['React.js', 'TypeScript', 'JavaScript', 'Redux', 'HTML & CSS', 'AngularJS']
+        title: 'Open Interview Prep',
+        description: '[REPLACE] A technical-interview preparation app. Add what it does and who it helps.',
+        techStack: ['React', 'TypeScript', 'Vite'],
+        link: 'https://github.com/cjoshidev/openInterviewPrep',
+        live: ''
     },
     {
-        label: 'Backend',
-        skills: ['Node.js', 'GraphQL', 'REST API', 'Spring Boot']
+        title: 'Help IT Dashboard',
+        description: '[REPLACE] An IT support / operations dashboard. Add the core problem it solves.',
+        techStack: ['Next.js', 'TypeScript'],
+        link: 'https://github.com/cjoshidev/help-it-dashboard',
+        live: ''
     },
     {
-        label: 'Cloud & DevOps',
-        skills: ['AWS', 'Terraform', 'CI/CD', 'Datadog']
-    },
-    {
-        label: 'Languages',
-        skills: ['JavaScript', 'TypeScript', 'Python']
+        title: 'Blick Game',
+        description: '[REPLACE] A browser game. Add the concept and anything notable about how you built it.',
+        techStack: ['JavaScript'],
+        link: 'https://github.com/cjoshidev/BlickGame',
+        live: ''
     }
 ];
 
 const certifications = [
+    {
+        name: 'Claude Certified Architect — Foundation',
+        issuer: 'Anthropic',
+        period: 'Jun 2026',
+        // TODO (Chandan): add your credential/verification URL when available.
+        url: ''
+    },
     {
         name: 'AWS Certified Cloud Practitioner',
         issuer: 'Amazon Web Services',
@@ -120,12 +144,42 @@ const Home = () => {
 
             <SectionDivider />
 
-            {/* Experience */}
+            {/* Projects */}
+            <section id="projects">
+                <SectionLabel>Selected Work</SectionLabel>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                    gap: 'var(--spacing-md)'
+                }}>
+                    {projects.map((project, i) => (
+                        <ProjectCard key={i} {...project} />
+                    ))}
+                </div>
+            </section>
+
+            <SectionDivider />
+
+            {/* Experience — styled as a deploy log */}
             <section id="work">
-                <SectionLabel>Experience</SectionLabel>
+                <SectionLabel>Deploy Log</SectionLabel>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
-                    {experience.map((job, i) => (
-                        <div key={i}>
+                    {experience.map((job, i) => {
+                        const current = i === 0;
+                        const version = `v${experience.length - i}.0`;
+                        return (
+                        <div key={i} style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: '6px' }}>
+                                <span style={{
+                                    width: '9px', height: '9px', borderRadius: '50%',
+                                    backgroundColor: current ? 'var(--accent)' : 'var(--border)',
+                                    border: current ? 'none' : '1px solid var(--text-secondary)'
+                                }} />
+                                {i < experience.length - 1 && (
+                                    <span style={{ width: '1px', flex: 1, backgroundColor: 'var(--border)', marginTop: '6px' }} />
+                                )}
+                            </div>
+                            <div style={{ flex: 1, paddingBottom: i < experience.length - 1 ? 'var(--spacing-md)' : 0 }}>
                             <div style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -134,12 +188,13 @@ const Home = () => {
                                 gap: '4px',
                                 marginBottom: 'var(--spacing-sm)'
                             }}>
-                                <div>
+                                <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', flexWrap: 'wrap' }}>
+                                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent)' }}>{version}</span>
                                     <span style={{ fontWeight: 600, fontSize: '1rem' }}>{job.company}</span>
-                                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginLeft: '10px' }}>{job.role}</span>
+                                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>{job.role}</span>
                                 </div>
-                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
-                                    {job.period}
+                                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
+                                    {current ? 'live · ' : ''}{job.period}
                                 </div>
                             </div>
                             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: job.highlights.length ? 'var(--spacing-md)' : 'var(--spacing-sm)' }}>
@@ -178,36 +233,18 @@ const Home = () => {
                                     <SkillTag key={k}>{tag}</SkillTag>
                                 ))}
                             </div>
+                            </div>
                         </div>
-                    ))}
+                    );})}
                 </div>
             </section>
 
             <SectionDivider />
 
-            {/* Skills */}
-            <section id="skills">
-                <SectionLabel>Skills</SectionLabel>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
-                    {skillGroups.map((group, i) => (
-                        <div key={i} style={{ display: 'flex', gap: 'var(--spacing-md)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                            <span style={{
-                                fontSize: '0.8rem',
-                                color: 'var(--text-secondary)',
-                                width: '90px',
-                                flexShrink: 0,
-                                paddingTop: '5px'
-                            }}>
-                                {group.label}
-                            </span>
-                            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', flex: 1 }}>
-                                {group.skills.map((skill, j) => (
-                                    <SkillTag key={j}>{skill}</SkillTag>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            {/* Systems — full-stack breadth as services */}
+            <section id="systems">
+                <SectionLabel>Systems · Stack</SectionLabel>
+                <Systems />
             </section>
 
             <SectionDivider />
@@ -219,14 +256,18 @@ const Home = () => {
                     {certifications.map((cert, i) => (
                         <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '4px' }}>
                             <div>
-                                <a
-                                    href={cert.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)' }}
-                                >
-                                    {cert.name}
-                                </a>
+                                {cert.url ? (
+                                    <a
+                                        href={cert.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)' }}
+                                    >
+                                        {cert.name}
+                                    </a>
+                                ) : (
+                                    <span style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{cert.name}</span>
+                                )}
                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>{cert.issuer}</p>
                             </div>
                             <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{cert.period}</span>
