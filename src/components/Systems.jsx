@@ -9,7 +9,7 @@ const services = [
     {
         name: 'Backend',
         summary: 'Services and APIs that hold under load.',
-        tech: ['Node.js', 'GraphQL', 'REST APIs', 'Spring Boot']
+        tech: ['Node.js', 'GraphQL', 'REST APIs', 'Spring Boot', 'DynamoDB']
     },
     {
         name: 'Infrastructure',

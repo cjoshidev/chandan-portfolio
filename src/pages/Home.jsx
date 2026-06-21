@@ -39,14 +39,15 @@ const experience = [
         role: 'Full Stack Engineer',
         period: 'Jul 2024 – Present',
         location: 'Pune, India',
-        // TODO (Chandan): replace these placeholders with your real ClearRoute wins.
-        // Keep them metric-driven, like the Zeals bullets below (what you built + the measurable impact).
         highlights: [
-            '[PLACEHOLDER] Led [feature/system] on [client/product], delivering [measurable outcome — %, time saved, scale].',
-            '[PLACEHOLDER] Built [what] with [tech], improving [metric] by [number].',
-            '[PLACEHOLDER] Owned [responsibility] across [area], reducing [cost/effort] by [number].'
+            'Owned the architecture, delivery, and operations of a customer migration platform enabling the seamless migration of 5M+ loyalty members across enterprise systems.',
+            'Architected a serverless integration platform on AWS Lambda and API Gateway, unifying REST and GraphQL ecosystems through a single customer-facing API layer.',
+            'Built Infrastructure as Code using Terraform to provision and manage cloud resources, improving deployment consistency and operational efficiency across environments.',
+            'Developed event-driven integrations using Kafka and AWS Lambda, enabling near real-time synchronization of customer and membership data across distributed systems.',
+            'Established production-grade observability with Datadog SLOs, dashboards, and alerting, improving reliability and accelerating incident detection and resolution.',
+            'Designed scalable membership reconciliation and migration workflows supporting millions of customer records while maintaining data integrity and zero-downtime releases.'
         ],
-        tags: ['TypeScript', 'Node.js', 'AWS', 'Terraform', 'CI/CD', 'Datadog']
+        tags: ['TypeScript', 'Node.js', 'React', 'GraphQL', 'DynamoDB', 'AWS', 'Terraform', 'CI/CD', 'Datadog']
     },
     {
         company: 'Zeals Co., Ltd.',
@@ -144,8 +145,8 @@ const Home = () => {
 
             <SectionDivider />
 
-            {/* Projects */}
-            <section id="projects">
+            {/* Projects — hidden for now */}
+            {/* <section id="projects">
                 <SectionLabel>Selected Work</SectionLabel>
                 <div style={{
                     display: 'grid',
