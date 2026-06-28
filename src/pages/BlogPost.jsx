@@ -1,13 +1,48 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo, useState ,useEffect} from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import fm from 'front-matter';
 import ShareButton from '../components/ShareButton';
+import { useMeta } from '../hooks/useMeta';
 
 const readTime = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 200));
 
 const modules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default', eager: true });
+
+const ReadingProgress = () => {
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        const onScroll = () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            const total = scrollHeight - clientHeight;
+            setProgress(total > 0 ? (scrollTop / total) * 100 : 0);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    return (
+        <div style={{
+            position: 'fixed',
+            top: 'var(--header-height)',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 'min(var(--max-width), 100%)',
+            padding: '0 var(--spacing-md)',
+            zIndex: 99,
+            pointerEvents: 'none',
+        }}>
+            <div style={{
+                width: `${progress}%`,
+                height: '2px',
+                backgroundColor: 'var(--accent)',
+                transition: 'width 0.1s linear',
+            }} />
+        </div>
+    );
+};
 
 const BlogPost = () => {
     const { slug } = useParams();
@@ -19,12 +54,12 @@ const BlogPost = () => {
         return { meta: attributes, content: body, mins: readTime(body) };
     }, [postData]);
 
-    useEffect(() => {
-        if (meta?.title) {
-            document.title = `${meta.title} — Chandan Joshi`;
-            return () => { document.title = 'Chandan Joshi'; };
-        }
-    }, [meta]);
+    useMeta({
+        title: meta?.title ? `${meta.title} — Chandan Joshi` : 'Chandan Joshi — Full Stack Engineer',
+        description: meta?.description || '',
+        path: `/blog/${slug}`,
+        type: 'article',
+    });
 
     if (!postData) {
         return (
@@ -41,6 +76,7 @@ const BlogPost = () => {
 
     return (
         <article style={{ padding: 'var(--spacing-xl) 0', maxWidth: '680px' }}>
+            <ReadingProgress />
             <header style={{ marginBottom: 'var(--spacing-lg)' }}>
                 <Link to="/blog" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', fontFamily: 'var(--font-mono)' }}>
                     &larr; logs
@@ -83,6 +119,28 @@ const BlogPost = () => {
                     <ShareButton title={meta.title} slug={slug} />
                 </div>
             </header>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'BlogPosting',
+                    headline: meta.title,
+                    description: meta.description || '',
+                    datePublished: meta.date,
+                    url: `${import.meta.env.VITE_SITE_URL || 'https://chandanjoshi.dev'}/blog/${slug}`,
+                    author: {
+                        '@type': 'Person',
+                        name: 'Chandan Joshi',
+                        url: 'https://chandanjoshi.dev',
+                    },
+                    publisher: {
+                        '@type': 'Person',
+                        name: 'Chandan Joshi',
+                        url: 'https://chandanjoshi.dev',
+                    },
+                })}}
+            />
 
             <div className="markdown-content">
                 <ReactMarkdown

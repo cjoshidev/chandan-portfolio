@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import fm from 'front-matter';
+import { useMeta } from '../hooks/useMeta';
 
 const readTime = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 200));
 
@@ -32,6 +33,12 @@ const TypeBadge = ({ type }) => {
 
 const Blog = () => {
     const [activeTag, setActiveTag] = useState(null);
+
+    useMeta({
+        title: 'Logs — Chandan Joshi',
+        description: 'Postmortems, engineering notes, and the occasional opinion — what I learned building and running things.',
+        path: '/blog',
+    });
 
     const modules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default', eager: true });
 

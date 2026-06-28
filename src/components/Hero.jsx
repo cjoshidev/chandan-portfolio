@@ -9,9 +9,26 @@ const metrics = [
 
 const openPalette = () => window.dispatchEvent(new CustomEvent('cmdk:toggle'));
 
+const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Chandan Joshi',
+    url: 'https://chandanjoshi.dev',
+    jobTitle: 'Full Stack Engineer',
+    description: 'Full stack engineer with 5+ years across React, Node.js, and AWS.',
+    sameAs: [
+        'https://www.linkedin.com/in/chandan015/',
+        'https://github.com/cjoshidev',
+    ],
+};
+
 const Hero = () => {
     return (
         <section className="hero reveal" style={{ padding: 'var(--spacing-xl) 0 var(--spacing-lg)' }}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+            />
             {/* Status line */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
