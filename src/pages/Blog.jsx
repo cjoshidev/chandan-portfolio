@@ -48,7 +48,7 @@ const Blog = () => {
         : posts;
 
     return (
-        <div style={{ paddingTop: 'var(--spacing-xl)', maxWidth: '640px' }}>
+        <div className="blog-listing-page" style={{ paddingTop: 'var(--spacing-xl)', maxWidth: '640px' }}>
             <header style={{ marginBottom: 'var(--spacing-lg)' }}>
                 <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', letterSpacing: '-0.03em', marginBottom: 'var(--spacing-sm)' }}>
                     Logs

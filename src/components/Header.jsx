@@ -29,9 +29,9 @@ const Header = () => {
                     <ul style={{ display: 'flex', gap: 'var(--spacing-md)', listStyle: 'none', margin: 0, padding: 0, fontSize: '0.9rem' }}>
                         {isHome ? (
                             <>
-                                <li><a href="#work" style={{ color: 'var(--text-secondary)' }}>Experience</a></li>
-                                <li><a href="#systems" style={{ color: 'var(--text-secondary)' }}>Systems</a></li>
-                                <li><a href="#contact" style={{ color: 'var(--text-secondary)' }}>Contact</a></li>
+                                <li className="nav-home-link"><a href="#work" style={{ color: 'var(--text-secondary)' }}>Experience</a></li>
+                                <li className="nav-home-link"><a href="#systems" style={{ color: 'var(--text-secondary)' }}>Systems</a></li>
+                                <li className="nav-home-link"><a href="#contact" style={{ color: 'var(--text-secondary)' }}>Contact</a></li>
                             </>
                         ) : (
                             <li><Link to="/" style={{ color: 'var(--text-secondary)' }}>Home</Link></li>

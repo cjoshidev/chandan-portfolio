@@ -164,7 +164,7 @@ const Home = () => {
             {/* Experience — styled as a deploy log */}
             <section id="work">
                 <SectionLabel>Deploy Log</SectionLabel>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+                <div className="deploy-log-list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
                     {experience.map((job, i) => {
                         const current = i === 0;
                         const version = `v${experience.length - i}.0`;
@@ -301,7 +301,7 @@ const Home = () => {
                 }}>
                     Got something interesting? I'd love to hear about it.
                 </p>
-                <div style={{ display: 'flex', gap: 'var(--spacing-lg)', flexWrap: 'wrap' }}>
+                <div className="contact-links" style={{ display: 'flex', gap: 'var(--spacing-lg)', flexWrap: 'wrap' }}>
                     <a
                         href="mailto:chandanjoshi.dev@gmail.com"
                         style={{

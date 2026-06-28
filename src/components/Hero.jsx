@@ -27,6 +27,7 @@ const Hero = () => {
                     </span>
                 </div>
                 <button
+                    className="hero-cmd-btn"
                     onClick={openPalette}
                     style={{
                         background: 'none', cursor: 'pointer',
