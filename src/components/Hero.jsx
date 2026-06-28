@@ -1,7 +1,7 @@
 import React from 'react';
 
 const metrics = [
-    { value: '5+ yrs', label: 'shipping production software' },
+    { value: '6+ yrs', label: 'shipping production software' },
     { value: '+35%', label: 'conversion from a feature I built', good: true },
     { value: '−45%', label: 'regression QA effort', good: true },
     { value: '2m → 20s', label: 'build pipeline I rebuilt' }
