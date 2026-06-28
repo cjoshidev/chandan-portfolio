@@ -4,6 +4,7 @@ date: "2026-06-12"
 type: "note"
 description: "A short note on earning Anthropic's Claude Certified Architect (Foundation) and where building with LLMs fits a full-stack engineer who also lives in the infra."
 tags: ["ai", "certification", "note"]
+draft: true
 ---
 
 Earned the **Claude Certified Architect — Foundation** today. Short note, because the interesting part isn't the badge — it's where this fits.

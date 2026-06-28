@@ -34,7 +34,6 @@ const CommandPalette = () => {
     }, [location.pathname, navigate]);
 
     const commands = useMemo(() => [
-        { id: 'projects', group: 'Navigate', label: 'Selected work', hint: 'projects portfolio repos', icon: <Icon><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></Icon>, run: () => goToSection('projects') },
         { id: 'systems', group: 'Navigate', label: 'Systems', hint: 'stack frontend backend infra skills', icon: <Icon d="M3 12h4l3 8 4-16 3 8h4" />, run: () => goToSection('systems') },
         { id: 'work', group: 'Navigate', label: 'Deploy log', hint: 'experience history jobs work', icon: <Icon d="M12 8v4l3 3M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z" />, run: () => goToSection('work') },
         { id: 'contact', group: 'Navigate', label: 'Contact', hint: 'reach out hire', icon: <Icon d="M4 4h16v16H4zM4 7l8 6 8-6" />, run: () => goToSection('contact') },

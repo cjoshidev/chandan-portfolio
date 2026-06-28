@@ -39,7 +39,7 @@ const Blog = () => {
         const { attributes, body } = fm(content);
         const slug = path.split('/').pop().replace('.md', '');
         return { slug, ...attributes, body };
-    }).sort((a, b) => new Date(b.date) - new Date(a.date));
+    }).filter(p => !p.draft).sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const allTags = [...new Set(posts.flatMap(p => p.tags || []))];
 

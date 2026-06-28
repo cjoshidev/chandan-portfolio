@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import fm from 'front-matter';
 import ShareButton from '../components/ShareButton';
-import ClapButton from '../components/ClapButton';
-import SubscribeForm from '../components/SubscribeForm';
 
 const readTime = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 200));
 
@@ -36,6 +34,8 @@ const BlogPost = () => {
             </div>
         );
     }
+
+    if (meta?.draft) return <Navigate to="/blog" replace />;
 
     if (!content) return null;
 
@@ -110,10 +110,6 @@ const BlogPost = () => {
                 </ReactMarkdown>
             </div>
 
-            <footer style={{ marginTop: 'var(--spacing-lg)', borderTop: '1px solid var(--border)', paddingTop: 'var(--spacing-lg)' }}>
-                {/* <ClapButton slug={slug} /> */}
-                {/* <SubscribeForm /> */}
-            </footer>
         </article>
     );
 };
