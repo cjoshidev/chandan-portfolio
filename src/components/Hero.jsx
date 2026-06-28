@@ -62,7 +62,7 @@ const Hero = () => {
                 lineHeight: 1.65
             }}>
                 I build and run software end to end — interfaces that scale, services that hold,
-                and the infrastructure underneath them. And yes, this site reports its own status.
+                and the infrastructure underneath them.
             </p>
 
             <div style={{ display: 'flex', gap: 'var(--spacing-md)', flexWrap: 'wrap', marginBottom: 'var(--spacing-xl)' }}>
