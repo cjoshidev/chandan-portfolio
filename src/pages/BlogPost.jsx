@@ -3,6 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import fm from 'front-matter';
+import ShareButton from '../components/ShareButton';
+import ClapButton from '../components/ClapButton';
+import SubscribeForm from '../components/SubscribeForm';
 
 const readTime = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 200));
 
@@ -67,7 +70,7 @@ const BlogPost = () => {
                 }}>
                     {meta.title}
                 </h1>
-                <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', gap: '12px', flexWrap: 'wrap', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', gap: '12px', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', alignItems: 'center' }}>
                     <span>
                         {new Date(meta.date).toLocaleDateString('en-GB', {
                             year: 'numeric', month: 'long', day: 'numeric'
@@ -77,6 +80,7 @@ const BlogPost = () => {
                     {(meta.tags || []).map(tag => (
                         <span key={tag} style={{ color: 'var(--accent)' }}>{tag}</span>
                     ))}
+                    <ShareButton title={meta.title} slug={slug} />
                 </div>
             </header>
 
@@ -105,6 +109,11 @@ const BlogPost = () => {
                     {content}
                 </ReactMarkdown>
             </div>
+
+            <footer style={{ marginTop: 'var(--spacing-lg)', borderTop: '1px solid var(--border)', paddingTop: 'var(--spacing-lg)' }}>
+                {/* <ClapButton slug={slug} /> */}
+                {/* <SubscribeForm /> */}
+            </footer>
         </article>
     );
 };
